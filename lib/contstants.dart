@@ -12,3 +12,7 @@ final BoxShadow kDefaultBoxShadow = BoxShadow(
   color: Colors.black.withOpacity(0.05),
   blurRadius: 5,
 );
+
+const LinearGradient kWaveGradient = LinearGradient(
+  colors: [Color(0xFF496AE1), Color(0xFFCE48B1)],
+);

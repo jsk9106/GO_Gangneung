@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_gangneung/contstants.dart';
-import 'package:go_gangneung/screens/home/home_screen.dart';
 
 import 'screens/nav/nav_screen.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: NavScreen(),
     );
   }
 }
