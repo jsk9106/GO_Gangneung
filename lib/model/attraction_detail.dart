@@ -20,6 +20,7 @@ class AttractionDetail {
     this.openDate,
     this.parking,
     this.useTime,
+    this.restDate
   });
 
   String accomcount;
@@ -36,6 +37,7 @@ class AttractionDetail {
   String openDate;
   String parking;
   String useTime;
+  String restDate;
 
   factory AttractionDetail.fromJson(Map<String, dynamic> json) => AttractionDetail(
     accomcount: json["accomcount"],
@@ -52,6 +54,7 @@ class AttractionDetail {
     openDate: json["opendate"],
     parking: json["parking"],
     useTime: json["usetime"],
+    restDate: json["restdate"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +72,6 @@ class AttractionDetail {
     "opendate": openDate,
     "parking": parking,
     "usetime": useTime,
+    "restdate": restDate,
   };
 }

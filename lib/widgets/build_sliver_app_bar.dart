@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_gangneung/screens/home/home_screen.dart';
-
-import '../contstants.dart';
 
 SliverAppBar buildSliverAppBar() {
   return SliverAppBar(

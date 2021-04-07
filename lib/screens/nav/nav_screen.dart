@@ -17,7 +17,7 @@ class _NavScreenState extends State<NavScreen> {
   ];
   final List<IconData> _icons = const [
     Icons.home,
-    MdiIcons.tag,
+    Icons.favorite,
     Icons.more_horiz,
   ];
   int _selectedIndex = 0;

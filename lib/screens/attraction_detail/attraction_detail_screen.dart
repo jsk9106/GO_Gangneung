@@ -14,9 +14,7 @@ class AttractionDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(attraction.contentId.toString()),
-      ),
+      backgroundColor: Colors.white,
       body: Body(attraction: attraction),
     );
   }
