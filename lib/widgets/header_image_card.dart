@@ -5,16 +5,16 @@ import 'package:go_gangneung/model/attraction.dart';
 import 'package:intl/intl.dart';
 
 class HeaderImageCard extends StatelessWidget {
-  final Attraction attraction;
+  final item;
 
   const HeaderImageCard({
     Key key,
-    @required this.attraction,
+    @required this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String _views = NumberFormat.compact().format(attraction.readCount);
+    String _views = NumberFormat.compact().format(item.readCount);
     return Stack(
       children: [
         Container(
@@ -26,9 +26,9 @@ class HeaderImageCard extends StatelessWidget {
               bottomRight: Radius.circular(30),
             ),
             image: DecorationImage(
-              image: attraction.firstImage == null
+              image: item.firstImage == null
                   ? Image.asset('assets/images/not_image.png').image
-                  : CachedNetworkImageProvider(attraction.firstImage),
+                  : CachedNetworkImageProvider(item.firstImage),
               fit: BoxFit.cover,
             ),
           ),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_gangneung/controller/attraction_detail_controller.dart';
 import 'package:go_gangneung/model/attraction.dart';
-import 'package:go_gangneung/widgets/google_map.dart';
+import 'package:go_gangneung/widgets/Map.dart';
 
 import 'detail_description.dart';
-import 'header_image_card.dart';
+import '../../../widgets/header_image_card.dart';
 
 class Body extends StatefulWidget {
   final Attraction attraction;
@@ -54,13 +54,13 @@ class _BodyState extends State<Body> {
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  HeaderImageCard(attraction: widget.attraction),
+                  HeaderImageCard(item: widget.attraction),
                   DetailDescription(
                     attraction: widget.attraction,
                     attractionDetail: controller.attractionDetail.value,
                     overView: controller.overView.value,
                   ),
-                  MapSample(title: widget.attraction.title, mapX: mapX ?? 0.1, mapY: mapY ?? 0.1),
+                  Map(title: widget.attraction.title, mapX: mapX ?? 0.1, mapY: mapY ?? 0.1),
                 ],
               ),
             ),

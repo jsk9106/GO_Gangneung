@@ -28,14 +28,14 @@ class Restaurant {
   int createdTime;
   String firstImage;
   String firstImage2;
-  var mapX; // String 형도 있고 Double 형도 있음
-  var mapY; // String 형도 있고 Double 형도 있음
+  var mapX; // String 형도 있고 double 형도 있음
+  var mapY; // String 형도 있고 double 형도 있음
   int mLevel;
   int modifiedTime;
   int readCount;
   String tel;
   String title;
-  int zipCode;
+  var zipCode; // String 형도 있고 int 형도 있음
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
     address: json["addr1"],
@@ -72,8 +72,8 @@ class Restaurant {
     "mlevel": mLevel,
     "modifiedtime": modifiedTime,
     "readcount": readCount,
-    "tel": tel,
     "title": title,
+    "tel": tel,
     "zipcode": zipCode,
   };
 }

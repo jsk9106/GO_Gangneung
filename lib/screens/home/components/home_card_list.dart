@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_gangneung/screens/attraction/attraction_screen.dart';
+import 'package:go_gangneung/model/category.dart';
+import 'package:go_gangneung/screens/list/attraction_screen.dart';
 
 Container homeCardList() {
   return Container(
@@ -9,9 +10,9 @@ Container homeCardList() {
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       children: [
-        stackCard('assets/images/home_card1.png', () => Get.to(() => AttractionScreen())),
-        stackCard('assets/images/home_card2.png', () {}),
-        stackCard('assets/images/home_card3.png', () {}),
+        stackCard('assets/images/home_card1.png', () => Get.to(() => ListScreen(category: Categories.attraction))),
+        stackCard('assets/images/home_card3.png', () => Get.to(() => ListScreen(category: Categories.restaurant))),
+        // stackCard('assets/images/home_card2.png', () => Get.to(() => ListScreen(category: Categories.cafe))),
       ],
     ),
   );

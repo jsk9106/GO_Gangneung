@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_gangneung/contstants.dart';
-import 'package:go_gangneung/screens/attraction/attraction_screen.dart';
 import 'package:go_gangneung/screens/home/components/menu_button.dart';
+import 'package:go_gangneung/screens/list/attraction_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Wave extends StatefulWidget {
@@ -64,7 +64,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          _oneButton(-.7, 0, kYellowColor, Icons.card_travel, '관광지', () => Get.to(() => AttractionScreen())),
+          _oneButton(-.7, 0, kYellowColor, Icons.card_travel, '관광지', () => Get.to(() => ListScreen())),
           _oneButton(0, 0, kRedColor, Icons.restaurant, '맛집', () => print('tab!!')),
           _oneButton(.8, 0, kPrimaryColor, Icons.local_cafe, '카페', () => print('tab!!')),
           _oneButton(-.3, 140, kGreenColor, MdiIcons.tag, '즐겨찾기', () => print('tab!!')),

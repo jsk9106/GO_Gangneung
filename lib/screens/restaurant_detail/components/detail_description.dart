@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:go_gangneung/model/attraction.dart';
-import 'package:go_gangneung/model/attraction_detail.dart';
+import 'package:go_gangneung/model/restaurant.dart';
+import 'package:go_gangneung/model/restaurant_detail.dart';
 
 class DetailDescription extends StatelessWidget {
-  final Attraction attraction;
-  final AttractionDetail attractionDetail;
+  final Restaurant restaurant;
+  final RestaurantDetail restaurantDetail;
   final String overView;
 
   const DetailDescription({
     Key key,
-    @required this.attraction,
-    @required this.attractionDetail,
+    @required this.restaurant,
+    @required this.restaurantDetail,
     @required this.overView,
   }) : super(key: key);
 
@@ -51,9 +51,27 @@ class DetailDescription extends StatelessWidget {
         Text.rich(
           TextSpan(children: [
             TextSpan(
+                text: '대표 메뉴: ',
+                style: TextStyle(fontWeight: FontWeight.w600)),
+            TextSpan(text: restaurantDetail.firstMenu ?? ''),
+          ]),
+        ),
+        SizedBox(height: 10),
+        Text.rich(
+          TextSpan(children: [
+            TextSpan(
+                text: '메뉴: ',
+                style: TextStyle(fontWeight: FontWeight.w600)),
+            TextSpan(text: restaurantDetail.treatMenu ?? ''),
+          ]),
+        ),
+        SizedBox(height: 10),
+        Text.rich(
+          TextSpan(children: [
+            TextSpan(
                 text: '문의 및 안내: ',
                 style: TextStyle(fontWeight: FontWeight.w600)),
-            TextSpan(text: attractionDetail.infoCenter ?? ''),
+            TextSpan(text: restaurantDetail.infoCenterFood ?? ''),
           ]),
         ),
         SizedBox(height: 10),
@@ -61,7 +79,7 @@ class DetailDescription extends StatelessWidget {
           TextSpan(children: [
             TextSpan(
                 text: '쉬는 날: ', style: TextStyle(fontWeight: FontWeight.w600)),
-            TextSpan(text: attractionDetail.restDate ?? ''),
+            TextSpan(text: restaurantDetail.restDateFood ?? ''),
           ]),
         ),
         SizedBox(height: 10),
@@ -69,17 +87,17 @@ class DetailDescription extends StatelessWidget {
           TextSpan(children: [
             TextSpan(
                 text: '주차시설: ', style: TextStyle(fontWeight: FontWeight.w600)),
-            TextSpan(text: attractionDetail.parking ?? ''),
+            TextSpan(text: restaurantDetail.parkingFood ?? ''),
           ]),
         ),
         SizedBox(height: 10),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('이용시간: ', style: TextStyle(fontWeight: FontWeight.w600)),
+            Text('엽업 시간: ', style: TextStyle(fontWeight: FontWeight.w600)),
             Expanded(
               child: Html(
-                data: attractionDetail.useTime ?? '',
+                data: restaurantDetail.openTimeFood ?? '',
                 style: {
                   '*': Style(margin: const EdgeInsets.all(0)),
                 },
@@ -105,7 +123,7 @@ class DetailDescription extends StatelessWidget {
                   Icon(Icons.location_on, color: Colors.grey),
                   SizedBox(width: 5),
                   Text(
-                    attraction.address,
+                    restaurant.address,
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w600,
@@ -116,7 +134,7 @@ class DetailDescription extends StatelessWidget {
               ),
               SizedBox(height: 15),
               Text(
-                attraction.title,
+                restaurant.title,
                 style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600),
               ),
             ],

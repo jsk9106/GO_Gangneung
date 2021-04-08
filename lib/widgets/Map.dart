@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapSample extends StatelessWidget {
+class Map extends StatelessWidget {
   final String title;
   final double mapX;
   final double mapY;
 
-  const MapSample({
+  const Map({
     Key key,
     @required this.mapX,
     @required this.mapY,
@@ -31,7 +31,7 @@ class MapSample extends StatelessWidget {
           markerId: MarkerId(title),
           position: _position,
           draggable: true,
-          infoWindow: InfoWindow(title: title)
+          infoWindow: InfoWindow(title: title),
         ),
       ].toSet();
     }
