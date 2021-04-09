@@ -12,7 +12,7 @@ Container homeCardList() {
       children: [
         stackCard('assets/images/home_card1.png', () => Get.to(() => ListScreen(category: Categories.attraction))),
         stackCard('assets/images/home_card3.png', () => Get.to(() => ListScreen(category: Categories.restaurant))),
-        // stackCard('assets/images/home_card2.png', () => Get.to(() => ListScreen(category: Categories.cafe))),
+        stackCard('assets/images/home_card4.png', () => Get.to(() => ListScreen(category: Categories.festival))),
       ],
     ),
   );

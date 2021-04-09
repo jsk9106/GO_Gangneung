@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '여행지 추천',
+                    '추천 테마',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
 

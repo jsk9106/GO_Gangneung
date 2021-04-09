@@ -1,3 +1,3 @@
 enum Categories{
-  attraction, restaurant
+  attraction, restaurant, festival
 }

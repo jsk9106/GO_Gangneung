@@ -23,7 +23,7 @@ class HomeHeader extends StatelessWidget {
         homeHeaderText(
           // 헤더 텍스트
           '강릉여행\n뽀사버리기',
-          '맛집, 카페, 관광지까지 다 있다!!',
+          '관광지, 맛집, 축제 정보까지 다 있다!!',
         ),
         HomeSearchBar(), // 검색창
       ],

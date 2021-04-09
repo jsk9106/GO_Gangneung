@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_gangneung/model/attraction.dart';
 import 'package:intl/intl.dart';
 
 class HeaderImageCard extends StatelessWidget {
@@ -19,7 +18,7 @@ class HeaderImageCard extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: Get.size.height * 0.5,
+          height: Get.size.height * 0.4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
@@ -36,7 +35,7 @@ class HeaderImageCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
           width: double.infinity,
-          height: Get.size.height * 0.5,
+          height: Get.size.height * 0.4,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.2),
             borderRadius: BorderRadius.only(

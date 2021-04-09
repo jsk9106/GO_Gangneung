@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_gangneung/controller/attration_controller.dart';
+import 'package:go_gangneung/controller/list_controller.dart';
 import 'package:get/get.dart';
 import 'package:go_gangneung/contstants.dart';
 import 'package:go_gangneung/model/category.dart';
-import 'package:go_gangneung/screens/attraction_detail/attraction_detail_screen.dart';
-import 'package:go_gangneung/screens/restaurant_detail/restaurant_detail_screen.dart';
+import 'package:go_gangneung/screens/detail/detail_screen.dart';
 import 'package:go_gangneung/widgets/build_sliver_app_bar.dart';
 
 class Body extends StatefulWidget {
@@ -19,7 +18,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final AttractionController controller = Get.put(AttractionController());
+  final ListController controller = Get.put(ListController());
 
   @override
   void initState() {
@@ -61,27 +60,19 @@ class _BodyState extends State<Body> {
               child: Center(child: CircularProgressIndicator()),
             );
           }
-          return buildListItem(controller.items[index]);
+          if(index % 2 == 0) return buildListItem(controller.items[index], true); // 짝수
+          else return buildListItem(controller.items[index], false); // 홀수
         },
         childCount: controller.items.length + 1,
       ),
     );
   }
 
-  Widget buildListItem(item) {
+  Widget buildListItem(item, bool isEven) {
     return GestureDetector(
-      onTap: (){
-        switch(widget.category){
-          case Categories.attraction:
-            Get.to(() => AttractionDetailScreen(attraction: item));
-            break;
-          case Categories.restaurant:
-            Get.to(() => RestaurantDetailScreen(restaurant: item));
-            break;
-        }
-      },
+      onTap: () => Get.to(() => DetailScreen(item: item, category: widget.category)),
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+        margin: isEven ? EdgeInsets.fromLTRB(40, 0, 0, 30) : EdgeInsets.fromLTRB(0, 0, 40, 30),
         width: double.infinity,
         height: 300,
         decoration: BoxDecoration(
@@ -89,29 +80,42 @@ class _BodyState extends State<Body> {
         ),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-                image: DecorationImage(
-                  image: item.firstImage == null
-                      ? Image.asset('assets/images/not_image.png').image
-                      : CachedNetworkImageProvider(item.firstImage),
-                  fit: BoxFit.cover,
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: isEven ? BorderRadius.only(topLeft: Radius.circular(15)) : BorderRadius.only(topRight: Radius.circular(15)),
+                    image: DecorationImage(
+                      image: item.firstImage == null
+                          ? Image.asset('assets/images/not_image.png').image
+                          : CachedNetworkImageProvider(item.firstImage),
+                      // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.saturation),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: isEven ? BorderRadius.only(topLeft: Radius.circular(15)) : BorderRadius.only(topRight: Radius.circular(15)),
+                    color: Colors.black.withOpacity(0.1)
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+                  borderRadius: isEven ? BorderRadius.only(bottomLeft: Radius.circular(15)) : BorderRadius.only(bottomRight: Radius.circular(15)),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: isEven ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
                     Text(
                       item.title,
@@ -121,9 +125,10 @@ class _BodyState extends State<Body> {
                     ),
                     SizedBox(height: 10),
                     Row(
+                      mainAxisAlignment: isEven ? MainAxisAlignment.end : MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.location_on, color: Colors.grey),
-                        SizedBox(width: 10),
+                        isEven ? Container() : Icon(Icons.location_on, color: Colors.grey),
+                        SizedBox(width: isEven ? 0 : 5),
                         Text(
                           item.address,
                           style: TextStyle(
@@ -133,6 +138,8 @@ class _BodyState extends State<Body> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        SizedBox(width: isEven ? 5 : 0),
+                        isEven ? Icon(Icons.location_on, color: Colors.grey) : Container(),
                       ],
                     )
                   ],
