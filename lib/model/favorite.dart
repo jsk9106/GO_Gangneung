@@ -1,5 +1,5 @@
-class Restaurant {
-  Restaurant({
+class Favorite {
+  Favorite({
     this.address,
     this.contentId,
     this.contentTypeId,
@@ -7,7 +7,6 @@ class Restaurant {
     this.mapX,
     this.mapY,
     this.readCount,
-    this.tel,
     this.title,
   });
 
@@ -18,22 +17,19 @@ class Restaurant {
   var mapX; // String 형도 있고 double 형도 있음
   var mapY; // String 형도 있고 double 형도 있음
   int readCount;
-  String tel;
   String title;
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
-    address: json["addr1"],
-    contentId: json["contentid"],
-    contentTypeId: json["contenttypeid"],
-    firstImage: json["firstimage"],
-    mapX: json["mapx"],
-    mapY: json["mapy"],
-    readCount: json["readcount"],
-    tel: json["tel"],
+  factory Favorite.fromJson(Map<String, dynamic> json) => Favorite(
+    address: json["address"],
+    contentId: json["contentId"],
+    contentTypeId: json["contentTypeId"],
+    firstImage: json["firstImage"],
+    mapX: json["mapX"],
+    mapY: json["mapY"],
+    readCount: json["readCount"],
     title: json["title"],
   );
 
-  // SqlLite 에 들어갈 데이터라서 맘대로 가공함
   Map<String, dynamic> toJson() => {
     "address": address,
     "contentId": contentId,

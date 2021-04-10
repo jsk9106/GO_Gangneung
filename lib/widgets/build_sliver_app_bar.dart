@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_gangneung/model/category.dart';
+import 'package:go_gangneung/screens/nav/nav_screen.dart';
 
 SliverAppBar buildSliverAppBar(Categories category) {
   String title = '';
@@ -21,7 +22,7 @@ SliverAppBar buildSliverAppBar(Categories category) {
     snap: true,
     leading: IconButton(
       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-      onPressed: () => Get.back(),
+      onPressed: () => Get.offAll(() => NavScreen()),
     ),
     title: Text(title),
   );

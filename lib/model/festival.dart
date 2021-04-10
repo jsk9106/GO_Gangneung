@@ -57,23 +57,15 @@ class Festival {
     zipCode: json["zipcode"],
   );
 
+  // SqlLite 에 들어갈 데이터라서 맘대로 가공함
   Map<String, dynamic> toJson() => {
-    "addr1": address,
-    "cat1": cat1,
-    "cat2": cat2,
-    "cat3": cat3,
-    "contentid": contentId,
-    "contenttypeid": contentTypeId,
-    "createdtime": createdTime,
-    "firstimage": firstImage,
-    "firstimage2": firstImage2,
-    "mapx": mapX,
-    "mapy": mapY,
-    "mlevel": mLevel,
-    "modifiedtime": modifiedTime,
-    "readcount": readCount,
+    "address": address,
+    "contentId": contentId,
+    "contentTypeId": contentTypeId,
+    "firstImage": firstImage,
+    "mapX": mapX,
+    "mapY": mapY,
+    "readCount": readCount,
     "title": title,
-    "tel": tel,
-    "zipcode": zipCode,
   };
 }

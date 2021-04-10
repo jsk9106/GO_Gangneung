@@ -6,6 +6,8 @@ const Color kYellowColor = Color(0xfff4c969);
 const Color kRedColor = Color(0xfff2573d);
 const Color kGreenColor = Color(0xff34c695);
 const Color kPurpleColor = Color(0xff6f64f0);
+const Color kPinkColor = Color(0xFFFF97B3);
+const kDismissColor = Color(0xFFFFE6E6);
 
 final BoxShadow kDefaultBoxShadow = BoxShadow(
   offset: Offset(0, 5),
