@@ -62,12 +62,11 @@ class _TitleAndFavoriteState extends State<TitleAndFavorite> {
           ),
         ),
         GestureDetector(
-          onTap: (){
+          onTap: () async{
             if(!isFavorite){
               DBHelper().createData(widget.item);
             } else{
               DBHelper().deleteFavorite(widget.item.contentId);
-              print('delete');
             }
             setState(() {
               isFavorite = !isFavorite;
