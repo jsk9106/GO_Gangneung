@@ -4,6 +4,7 @@ import 'package:go_gangneung/model/festival.dart';
 import 'package:go_gangneung/model/festival_detail.dart';
 import 'package:go_gangneung/model/restaurant.dart';
 import 'package:go_gangneung/model/restaurant_detail.dart';
+import 'package:go_gangneung/model/search.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -11,6 +12,7 @@ class Repository{
   int attractionTotalCount;
   int restaurantTotalCount;
   int festivalTotalCount;
+  int searchTotalCount;
 
   // Enecoding key
   // DVubPbaRkkxO0SIo3YdB8gSPBWhtJ30SJT7ht3DiZB1uJ6QcoIE8TCB6PIKUvQeXI5kNR7FI7ZgLjQPj8ZP%2BJg%3D%3D
@@ -282,6 +284,47 @@ class Repository{
        else print('result is null');
     } catch(err){
       print(err);
+    }
+  }
+
+  Future getSearchKeyword(String keyword, int page, int numOfRows) async{
+    Map<String, String> queryPram = {
+      'ServiceKey':
+      'DVubPbaRkkxO0SIo3YdB8gSPBWhtJ30SJT7ht3DiZB1uJ6QcoIE8TCB6PIKUvQeXI5kNR7FI7ZgLjQPj8ZP+Jg==',
+      'keyword': keyword, // 키워드
+      'areaCode': '32', // 강원
+      'sigunguCode': '1', // 강릉시
+      'pageNo': page.toString(), // 페이지
+      'numOfRows': numOfRows.toString(), // 페이지당 출력 갯수
+      'MobileOS': 'AND', // 안드로이드
+      'MobileApp': 'GoGangenung', // 고강릉
+      '_type': 'json' // 타입
+    };
+    var uri = Uri.http('api.visitkorea.or.kr',
+        '/openapi/service/rest/KorService/searchKeyword', queryPram);
+
+    try{
+      http.Response response = await http.get(uri);
+      var body = jsonDecode(utf8.decode(response.bodyBytes));
+      searchTotalCount = body['response']['body']['totalCount'];
+      var result = body['response']['body']['items']['item'];
+      if(result != null){
+        if(searchTotalCount == 1) return Search.fromJson(result); // 검색결과가 하나일 때
+        List<Search> searchList = [];
+        result.forEach((item){ // contentTypeId 가 여행코스가 아닌 것만 리스트에 담아서 리턴
+          if(item['contenttypeid'] != 25){
+            searchList.add(Search.fromJson(item));
+          } else{
+            searchTotalCount--;
+          }
+        });
+        return searchList;
+      } else{
+        print('result is null');
+      }
+    }catch(err){
+      print(err);
+      return null;
     }
   }
 

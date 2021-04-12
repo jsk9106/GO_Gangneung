@@ -46,12 +46,15 @@ class _BodyState extends State<Body> {
 
   Widget _buildListItem(BuildContext context, Favorite favorite) {
     Categories category;
-    if(favorite.contentTypeId == 12) category = Categories.attraction;
-    else if(favorite.contentTypeId == 39) category = Categories.restaurant;
-    else if(favorite.contentTypeId == 15) category = Categories.festival;
+    if (favorite.contentTypeId == 12)
+      category = Categories.attraction;
+    else if (favorite.contentTypeId == 39)
+      category = Categories.restaurant;
+    else if (favorite.contentTypeId == 15) category = Categories.festival;
 
     return GestureDetector(
-      onTap: () => Get.to(() => DetailScreen(item: favorite, category: category)),
+      onTap: () =>
+          Get.to(() => DetailScreen(item: favorite, category: category)),
       child: Dismissible(
         key: Key(favorite.contentId.toString()),
         direction: DismissDirection.endToStart,
@@ -94,14 +97,16 @@ class _BodyState extends State<Body> {
                 height: 130,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Container(color: Colors.grey[200]),
-                    imageUrl: favorite.firstImage,
-                    errorWidget: (context, url, error) =>
-                        Center(child: Icon(Icons.error)),
-                    fit: BoxFit.cover,
-                  ),
+                  child: favorite.firstImage == null
+                      ? Image.asset('assets/images/not_image.png')
+                      : CachedNetworkImage(
+                          placeholder: (context, url) =>
+                              Container(color: Colors.grey[200]),
+                          imageUrl: favorite.firstImage,
+                          errorWidget: (context, url, error) =>
+                              Center(child: Icon(Icons.error)),
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               SizedBox(width: 10),
@@ -168,7 +173,7 @@ class _BodyState extends State<Body> {
                 content: Text("즐겨찾기에서 삭제되었습니다."),
                 action: SnackBarAction(
                   label: '확인',
-                  onPressed: (){},
+                  onPressed: () {},
                 ),
               ),
             );
