@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_gangneung/screens/favorite/favorite_screen.dart';
 import 'package:go_gangneung/screens/home/home_screen.dart';
+import 'package:go_gangneung/screens/more/more_screen.dart';
 
 import 'components/custom_tab_bar.dart';
 
@@ -13,7 +14,7 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     FavoriteScreen(),
-    Scaffold(),
+    MoreScreen(),
   ];
   final List<IconData> _icons = const [
     Icons.home,

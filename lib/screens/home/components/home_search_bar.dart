@@ -12,8 +12,11 @@ class HomeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: -25,
-      child: GestureDetector(
-        onTap: () => Get.to(() => SearchScreen()),
+      child: InkWell(
+        onTap: () {
+          print('tab!');
+          Get.to(() => SearchScreen());
+        },
         child: Container(
           padding: const EdgeInsets.only(left: 10),
           alignment: Alignment.center,

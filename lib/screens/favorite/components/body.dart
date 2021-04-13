@@ -98,7 +98,7 @@ class _BodyState extends State<Body> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: favorite.firstImage == null
-                      ? Image.asset('assets/images/not_image.png')
+                      ? Image.asset('assets/images/not_image.png', fit: BoxFit.cover)
                       : CachedNetworkImage(
                           placeholder: (context, url) =>
                               Container(color: Colors.grey[200]),

@@ -15,6 +15,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         title: Text('즐겨찾기'),
         actions: [

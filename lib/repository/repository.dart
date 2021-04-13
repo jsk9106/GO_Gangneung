@@ -309,10 +309,12 @@ class Repository{
       searchTotalCount = body['response']['body']['totalCount'];
       var result = body['response']['body']['items']['item'];
       if(result != null){
-        if(searchTotalCount == 1) return Search.fromJson(result); // 검색결과가 하나일 때
+        if(searchTotalCount == 1) {
+          if(result['contenttypeid'] != 25 && result['contenttypeid'] != 32) return Search.fromJson(result); // 검색결과가 하나일 때
+        }
         List<Search> searchList = [];
         result.forEach((item){ // contentTypeId 가 여행코스가 아닌 것만 리스트에 담아서 리턴
-          if(item['contenttypeid'] != 25){
+          if(item['contenttypeid'] != 25 && item['contenttypeid'] != 32){
             searchList.add(Search.fromJson(item));
           } else{
             searchTotalCount--;

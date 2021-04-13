@@ -9,12 +9,12 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          HomeHeader(),
-          SizedBox(height: 50),
-          Expanded(
-            child: Container(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeHeader(),
+            SizedBox(height: 50),
+            Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(25, 30, 0, 30),
               child: Column(
@@ -31,8 +31,8 @@ class Body extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

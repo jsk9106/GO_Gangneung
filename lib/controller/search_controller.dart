@@ -25,6 +25,12 @@ class SearchController extends GetxController{
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
+
   Future getSearchKeyword() async{
     loading(true);
     var _items = await _repository.getSearchKeyword(keyword, page, numOfRows);
