@@ -309,15 +309,18 @@ class Repository{
       searchTotalCount = body['response']['body']['totalCount'];
       var result = body['response']['body']['items']['item'];
       if(result != null){
-        if(searchTotalCount == 1) {
-          if(result['contenttypeid'] != 25 && result['contenttypeid'] != 32) return Search.fromJson(result); // 검색결과가 하나일 때
+        if(searchTotalCount == 1) { // 검색결과가 하나일 때
+          // 관광지, 축제, 음식점일때만 담기
+          if(result['contenttypeid'] == 12 || result['contenttypeid'] == 15 || result['contenttypeid'] == 39) return Search.fromJson(result);
+          else searchTotalCount--; // 저 중에 속하지 않는다면 Totalcount 0으로 만들어주기
         }
         List<Search> searchList = [];
-        result.forEach((item){ // contentTypeId 가 여행코스가 아닌 것만 리스트에 담아서 리턴
-          if(item['contenttypeid'] != 25 && item['contenttypeid'] != 32){
+        result.forEach((item){ // 검색 결과가 여러개 일 때
+          // 관광지, 축제, 음식점일때만 담기
+          if(result['contenttypeid'] == 12 || result['contenttypeid'] == 15 || result['contenttypeid'] == 39){
             searchList.add(Search.fromJson(item));
           } else{
-            searchTotalCount--;
+            searchTotalCount--; // 그 외에는 searchCount -해주기
           }
         });
         return searchList;
