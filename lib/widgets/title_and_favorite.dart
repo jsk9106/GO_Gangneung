@@ -17,8 +17,11 @@ class _TitleAndFavoriteState extends State<TitleAndFavorite> {
   Future<void> _getFavoriteList() async{
     List<Favorite> favoriteList = await DBHelper().getAllFavorites() ?? [];
     for(Favorite f in favoriteList){
+      print(f.contentId);
       if(f.contentId == widget.item.contentId){
-        isFavorite = true;
+        setState(() {
+          isFavorite = true;
+        });
       }
     }
   }
