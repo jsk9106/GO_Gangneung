@@ -33,7 +33,7 @@
 
 # 진수 지정
 /lib/primary.dart
-app/release/
+/android/app/release/
 
 # Web related
 lib/generated_plugin_registrant.dart
