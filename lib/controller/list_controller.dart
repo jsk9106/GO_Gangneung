@@ -33,15 +33,19 @@ class ListController extends GetxController {
       totalCount = repository.listTotalCount;
       print(totalCount);
       if(_items != null && _items.length > 0) items.addAll(_items);
+      else {
+        Get.back();
+        _customSnackBar('잠시후 다시 시도해주세요');
+      }
     } else {
-      return _customSnackBar();
+      return _customSnackBar('마지막 목록입니다.');
     }
   }
 
-  void _customSnackBar(){
+  void _customSnackBar(String message){
     Get.snackbar(
       '알림',
-      '마지막 목록입니다.',
+      message,
       backgroundColor: kPrimaryColor.withOpacity(0.5),
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,

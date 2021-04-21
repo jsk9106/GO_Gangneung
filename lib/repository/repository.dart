@@ -65,8 +65,7 @@ class Repository {
           case Categories.festival:
             return result.map((item) => Festival.fromJson(item)).toList();
         }
-      } else
-        print('result is null');
+      } else return null;
     } catch (err) {
       print(err);
     }
@@ -103,8 +102,7 @@ class Repository {
           case Categories.festival:
             return FestivalDetail.fromJson(result);
         }
-      } else
-        print('result is null');
+      } else return null;
     } catch (err) {
       print(err);
     }
@@ -135,8 +133,7 @@ class Repository {
 
       if (result != null) {
         return result;
-      } else
-        print('result is null');
+      } else return null;
     } catch (err) {
       print(err);
     }
