@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_gangneung/model/attraction.dart';
-import 'package:go_gangneung/model/festival.dart';
-import 'package:go_gangneung/model/restaurant.dart';
 import 'package:go_gangneung/model/category.dart';
 import 'package:go_gangneung/repository/repository.dart';
 
@@ -30,48 +27,12 @@ class ListController extends GetxController {
     super.dispose();
   }
 
-  void fetchData() async {
-    switch(category){
-      case Categories.attraction:
-        loadAttractionList();
-        break;
-      case Categories.restaurant:
-        loadRestaurantList();
-        break;
-      case Categories.festival:
-        loadFestivalList();
-        break;
-    }
-  }
-
-  Future loadAttractionList() async{
-    if (items.length < totalCount) { // 관광지 숫자보다 더 많이 안불러오게
-      List<Attraction> tempAttractions = await repository.getAttractionList(page, numOfRows);
-      totalCount = repository.attractionTotalCount;
+  Future fetchData() async{
+    if (items.length < totalCount) { // 리스트의 총 갯수만큼만 호출 되게
+      List<dynamic> _items = await repository.getList(page, numOfRows, category);
+      totalCount = repository.listTotalCount;
       print(totalCount);
-      if(tempAttractions != null && tempAttractions.length > 0) items.addAll(tempAttractions);
-    } else {
-      return _customSnackBar();
-    }
-  }
-
-  Future loadRestaurantList() async{
-    if (items.length < totalCount) { // 카페 숫자보다 더 많이 안불러오게
-      List<Restaurant> tempRestaurant = await repository.getRestaurantList(page, numOfRows);
-      totalCount = repository.restaurantTotalCount;
-      print(totalCount);
-      if(tempRestaurant != null && tempRestaurant.length > 0) items.addAll(tempRestaurant);
-    } else {
-      return _customSnackBar();
-    }
-  }
-
-  Future loadFestivalList() async{
-    if (items.length < totalCount) { // 축제 숫자보다 더 많이 안불러오게
-      List<Festival> tempFestival = await repository.getFestivalList(page, numOfRows);
-      totalCount = repository.festivalTotalCount;
-      print(totalCount);
-      if(tempFestival != null && tempFestival.length > 0) items.addAll(tempFestival);
+      if(_items != null && _items.length > 0) items.addAll(_items);
     } else {
       return _customSnackBar();
     }

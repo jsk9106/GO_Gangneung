@@ -47,6 +47,7 @@ class _BodyState extends State<Body> {
         return Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: ListView.builder(
+            physics: BouncingScrollPhysics(),
             controller: controller.scrollController,
             itemCount: controller.items.length + 1,
             itemBuilder: (context, index) {

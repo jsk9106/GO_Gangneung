@@ -21,6 +21,7 @@ class _BodyState extends State<Body> {
   double mapX;
   double mapY;
 
+  // 가져온 위도, 경도가 String 형이면 double 형으로 바꿔주기
   void _changeStringToDouble(){
     if(widget.item.mapX is String){
       mapX = double.parse(widget.item.mapX);
@@ -34,17 +35,15 @@ class _BodyState extends State<Body> {
     }
   }
 
+  // category 에 따라 가지고 올 데이터 정하기
   dynamic _changeDetail(){
     switch(widget.category){
       case Categories.attraction:
         return controller.attractionDetail.value;
-        break;
       case Categories.restaurant:
         return controller.restaurantDetail.value;
-        break;
       case Categories.festival:
         return controller.festivalDetail.value;
-        break;
     }
   }
 

@@ -30,7 +30,10 @@
 .pub-cache/
 .pub/
 /build/
+
+# 진수 지정
 /lib/primary.dart
+app/release/
 
 # Web related
 lib/generated_plugin_registrant.dart

@@ -13,40 +13,24 @@ class DetailController extends GetxController{
   Rx<FestivalDetail> festivalDetail = FestivalDetail().obs;
   RxString overview = ''.obs;
 
-  void fetchData(String contentId) {
-    switch(category){
-      case Categories.attraction:
-        _getAttractionDetail(contentId);
-        break;
-      case Categories.restaurant:
-        _getRestaurantDetail(contentId);
-        break;
-      case Categories.festival:
-        _getFestivalDetail(contentId);
-        break;
+  Future<void> fetchData(String contentId) async{
+    dynamic _detail = await _repository.getDetail(contentId, category);
+    if(_detail != null) {
+      switch(category){
+        case Categories.attraction:
+          attractionDetail(_detail);
+          break;
+        case Categories.restaurant:
+          restaurantDetail(_detail);
+          break;
+        case Categories.festival:
+          festivalDetail(_detail);
+          break;
+      }
     }
+    String _overview = await _repository.getOverView(contentId, category);
+    if(_overview != null) overview(_overview);
+    else overview('정보 없음');
   }
-
-  Future<void> _getAttractionDetail(String contentId) async{
-    AttractionDetail tempAttractionDetail = await _repository.getAttractionDetail(contentId);
-    if(tempAttractionDetail != null) attractionDetail(tempAttractionDetail);
-    String tempOverview = await _repository.getAttractionOverview(contentId);
-    if(tempOverview != null) overview(tempOverview);
-  }
-
-  Future<void> _getRestaurantDetail(String contentId) async{
-    RestaurantDetail tempRestaurantDetail = await _repository.getRestaurantDetail(contentId);
-    if(tempRestaurantDetail != null) restaurantDetail(tempRestaurantDetail);
-    String tempOverview = await _repository.getRestaurantOverview(contentId);
-    if(tempOverview != null) overview(tempOverview);
-  }
-
-  Future<void> _getFestivalDetail(String contentId) async{
-    FestivalDetail tempFestivalDetail = await _repository.getFestivalDetail(contentId);
-    if(tempFestivalDetail != null) festivalDetail(tempFestivalDetail);
-    String tempOverview = await _repository.getFestivalOverview(contentId);
-    if(tempOverview != null) overview(tempOverview);
-  }
-
 
 }

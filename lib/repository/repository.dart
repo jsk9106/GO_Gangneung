@@ -1,5 +1,6 @@
 import 'package:go_gangneung/model/attraction.dart';
 import 'package:go_gangneung/model/attraction_detail.dart';
+import 'package:go_gangneung/model/category.dart';
 import 'package:go_gangneung/model/festival.dart';
 import 'package:go_gangneung/model/festival_detail.dart';
 import 'package:go_gangneung/model/restaurant.dart';
@@ -10,18 +11,36 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Repository {
-  int attractionTotalCount;
-  int restaurantTotalCount;
-  int festivalTotalCount;
   int searchTotalCount;
+  int listTotalCount;
 
-  Future getAttractionList(int page, int numOfRows) async {
+  // category 값에 따라 contentTypeId 바꿔주기
+  int createContentTypeId(Categories category){
+    int contentTypeId;
+    switch(category){
+      case Categories.attraction:
+        contentTypeId = 12;
+        break;
+      case Categories.restaurant:
+        contentTypeId = 39;
+        break;
+      case Categories.festival:
+        contentTypeId = 15;
+        break;
+    }
+    return contentTypeId;
+  }
+
+  // category 값에 따라 리스트 가져오기
+  Future getList(int page, int numOfRows, Categories category) async {
+    int contentTypeId = createContentTypeId(category);
+
     Map<String, String> queryPram = {
       'ServiceKey': serviceKey,
       'areaCode': '32', // 강원
       'sigunguCode': '1', // 강릉시
-      'contentTypeId': '12', // 관광지
-      'arrange': 'B', // 조회순
+      'contentTypeId': contentTypeId.toString(), // 12: 관광지, 39: 음식점, 15: 축제
+      'arrange': 'Q', // 대표이미지가 반드시 있는 수정순
       'pageNo': page.toString(), // 페이지
       'numOfRows': numOfRows.toString(), // 페이지당 출력 갯수
       'MobileOS': 'AND', // 안드로이드
@@ -34,11 +53,18 @@ class Repository {
     try {
       http.Response response = await http.get(uri);
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      attractionTotalCount = body['response']['body']['totalCount'];
+      listTotalCount = body['response']['body']['totalCount'];
       List<dynamic> result = body['response']['body']['items']['item'];
 
       if (result != null) {
-        return result.map((item) => Attraction.fromJson(item)).toList();
+        switch(category){
+          case Categories.attraction:
+            return result.map((item) => Attraction.fromJson(item)).toList();
+          case Categories.restaurant:
+            return result.map((item) => Restaurant.fromJson(item)).toList();
+          case Categories.festival:
+            return result.map((item) => Festival.fromJson(item)).toList();
+        }
       } else
         print('result is null');
     } catch (err) {
@@ -46,11 +72,14 @@ class Repository {
     }
   }
 
-  Future getAttractionDetail(String contentId) async {
+  // category 값에 따라 디테일 정보 가져오기
+  Future getDetail(String contentId, Categories category) async {
+    int contentTypeId = createContentTypeId(category);
+
     Map<String, String> queryPram = {
       'ServiceKey': serviceKey,
       'contentId': contentId,
-      'contentTypeId': '12', // 관광지
+      'contentTypeId': contentTypeId.toString(),  // 12: 관광지, 39: 음식점, 15: 축제
       'pageNo': '1', // 페이지
       'numOfRows': '1', // 페이지당 출력 갯수
       'MobileOS': 'AND', // 안드로이드
@@ -66,7 +95,14 @@ class Repository {
       var result = body['response']['body']['items']['item'];
 
       if (result != null) {
-        return AttractionDetail.fromJson(result);
+        switch(category){
+          case Categories.attraction:
+            return AttractionDetail.fromJson(result);
+          case Categories.restaurant:
+            return RestaurantDetail.fromJson(result);
+          case Categories.festival:
+            return FestivalDetail.fromJson(result);
+        }
       } else
         print('result is null');
     } catch (err) {
@@ -74,187 +110,14 @@ class Repository {
     }
   }
 
-  Future getAttractionOverview(String contentId) async {
+  // overview 가져오기
+  Future getOverView(String contentId, Categories category) async {
+    int contentTypeId = createContentTypeId(category);
+
     Map<String, String> queryPram = {
       'ServiceKey': serviceKey,
       'contentId': contentId,
-      'contentTypeId': '12', // 관광지
-      'pageNo': '1', // 페이지
-      'numOfRows': '1', // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      'overviewYN': 'Y',
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/detailCommon', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var result = body['response']['body']['items']['item']['overview'];
-
-      if (result != null) {
-        return result;
-      } else
-        print('result is null');
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getRestaurantList(int page, int numOfRows) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'areaCode': '32', // 강원
-      'sigunguCode': '1', // 강릉시
-      'contentTypeId': '39', // 음식점
-      'arrange': 'B', // 조회순
-      'pageNo': page.toString(), // 페이지
-      'numOfRows': numOfRows.toString(), // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/areaBasedList', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      restaurantTotalCount = body['response']['body']['totalCount'];
-      List<dynamic> result = body['response']['body']['items']['item'];
-
-      if (result != null) {
-        return result.map((item) => Restaurant.fromJson(item)).toList();
-      } else
-        print('result is null');
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getRestaurantDetail(String contentId) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'contentId': contentId,
-      'contentTypeId': '39', // 음식점
-      'pageNo': '1', // 페이지
-      'numOfRows': '1', // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/detailIntro', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      Map<String, dynamic> result = body['response']['body']['items']['item'];
-      if (result != null) {
-        return RestaurantDetail.fromJson(result);
-      } else {
-        print('result is null');
-      }
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getRestaurantOverview(String contentId) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'contentId': contentId,
-      'contentTypeId': '39', // 음식점
-      'pageNo': '1', // 페이지
-      'numOfRows': '1', // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      'overviewYN': 'Y',
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/detailCommon', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var result = body['response']['body']['items']['item']['overview'];
-
-      if (result != null) {
-        return result;
-      } else
-        print('result is null');
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getFestivalList(int page, int numOfRows) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'areaCode': '32', // 강원
-      'sigunguCode': '1', // 강릉시
-      'contentTypeId': '15', // 축제
-      'arrange': 'B', // 조회순
-      'pageNo': page.toString(), // 페이지
-      'numOfRows': numOfRows.toString(), // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/areaBasedList', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      festivalTotalCount = body['response']['body']['totalCount'];
-      List<dynamic> result = body['response']['body']['items']['item'];
-
-      if (result != null) {
-        return result.map((item) => Festival.fromJson(item)).toList();
-      } else
-        print('result is null');
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getFestivalDetail(String contentId) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'contentId': contentId,
-      'contentTypeId': '15', // 축제
-      'pageNo': '1', // 페이지
-      'numOfRows': '1', // 페이지당 출력 갯수
-      'MobileOS': 'AND', // 안드로이드
-      'MobileApp': 'GoGangenung', // 고강릉
-      '_type': 'json' // 타입
-    };
-    var uri = Uri.http('api.visitkorea.or.kr',
-        '/openapi/service/rest/KorService/detailIntro', queryPram);
-
-    try {
-      http.Response response = await http.get(uri);
-      var body = jsonDecode(utf8.decode(response.bodyBytes));
-      Map<String, dynamic> result = body['response']['body']['items']['item'];
-      if (result != null) {
-        return FestivalDetail.fromJson(result);
-      } else {
-        print('result is null');
-      }
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future getFestivalOverview(String contentId) async {
-    Map<String, String> queryPram = {
-      'ServiceKey': serviceKey,
-      'contentId': contentId,
-      'contentTypeId': '15', // 축제
+      'contentTypeId': contentTypeId.toString(), // 12: 관광지, 39: 음식점, 15: 축제
       'pageNo': '1', // 페이지
       'numOfRows': '1', // 페이지당 출력 갯수
       'MobileOS': 'AND', // 안드로이드
@@ -269,15 +132,17 @@ class Repository {
       http.Response response = await http.get(uri);
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       String result = body['response']['body']['items']['item']['overview'];
-      if (result != null)
+
+      if (result != null) {
         return result;
-      else
+      } else
         print('result is null');
     } catch (err) {
       print(err);
     }
   }
 
+  // 검색 결과 가져오기
   Future getSearchKeyword(String keyword, int page, int numOfRows) async {
     Map<String, String> queryPram = {
       'ServiceKey': serviceKey,

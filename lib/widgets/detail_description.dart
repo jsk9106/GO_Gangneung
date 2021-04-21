@@ -22,13 +22,10 @@ class DetailDescription extends StatelessWidget {
     switch (category) {
       case Categories.attraction:
         return attractionDescription();
-        break;
       case Categories.restaurant:
         return restaurantDescription();
-        break;
       case Categories.festival:
         return festivalDescription();
-        break;
     }
     return Container();
   }
