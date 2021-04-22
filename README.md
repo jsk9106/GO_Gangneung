@@ -1,16 +1,42 @@
-# go_gangneung
+# Go강릉
 
-A new Flutter application.
+한국관광공사의 API를 활용해 만든 앱입니다.
+강원도 강릉시의 여행정보를 소개합니다.
+제공하는 카테고리에는 관광지, 음식점, 축제 등이 있습니다.
 
-## Getting Started
+## 기능
 
-This project is a starting point for a Flutter application.
+* 관광지 정보
+* 음식점 정보
+* 축제 및 행사 정보
+* SQFlite를 활용한 즐겨찾기 기능
+* Google Map
+* 통합 검색기능
 
-A few resources to get you started if this is your first Flutter project:
+## 리스트 페이지
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+선택한 카테고리의 리스트를 볼 수 있는 페이지입니다.
+수정순으로 정렬됩니다.
+인피니티 스크롤을 적용하였습니다.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 디테일 페이지
+
+한 소스에서 카테고리에 따라 다른 정보가 출력되게 만들었습니다.
+구글맵을 적용하였습니다.
+하트를 눌러 즐겨찾기를 할 수 있습니다.
+
+## 즐겨찾기
+
+SQFlite를 이용하여 즐겨찾기 기능을 구현하였습니다.
+디테일 페이지에서 하트를 눌러 즐겨찾기 할 수 있습니다.
+하트를 다시 눌러 삭제하거나 옆으로 밀어 삭제 할 수 있습니다.(Dismissible 적용)
+
+## 검색 기능
+
+카테고리에 상관없이 키워드로 검색하는 통합검색 기능을 구현하였습니다.
+
+
+## 예외처리
+
+모든 기능에는 데이터값이 없거나 검색결과가 없을 때 앱이 터지지 않도록 예외처리를 하였습니다.
+
